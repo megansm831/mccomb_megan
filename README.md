@@ -12,12 +12,3 @@ This is my dog Haggis. She thinks she'd pretty important.
 
 
 ![My dog Haggis.](haggis.jpg)
-
-This is a line from RStudio.
-
-##Here is my new list using Syntax
-
-1. this is my **first** item
-2. here is my *second* item
-3. I will use [Google]("https://google.com") to learn more about R
-
