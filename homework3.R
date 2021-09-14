@@ -16,18 +16,15 @@ data <- read_csv("gop_debates.csv")
 data$text
 
 #measure the readiblity of every line of text
-textstat_readability(data$text, measure = "Flesch.Kincaid")
+textstat_readability(data$who, measure = "Flesch.Kincaid")
 
-#calculate lexical diversity
-textstat_lexdiv(
-  data$text,
-  measure = c("TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR",
-              "MSTTR", "all"),
-  remove_numbers = TRUE,
-  remove_punct = TRUE,
-  remove_symbols = TRUE,
-  remove_hyphens = FALSE,
-  log.base = 10,
-  MATTR_window = 100L,
-  MSTTR_segment = 100L,
-)
+
+#creates a col in our csv file of readibility scores 
+data$Readibility <- textstat_readability(data$who, measure = "Flesch.Kincaid")
+data$Readibility
+
+#sort presidents based on name
+newdata <- sort(data$who)
+newdata$text
+
+#Aggregates the data by candidate and returns a two column data frame: speaker | ave_complexity in descending order of complexity.
