@@ -33,3 +33,4 @@ data %>%
   dif <- data.frame(diff(as.matrix(ave_complexity))) # find the difference between the speaking complexities
   mean(dif) # find the mean of the differences
   
+  
