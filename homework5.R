@@ -9,21 +9,24 @@
 library(tidyverse)
 library(quanteda)
 library(quanteda.textstats)
-library(dplyr)
-library(janeaustenr)
 library(tidytext)
+library(tidyverse)
+library(rmarkdown)
+library(dplyr)
 
 #load data
-data <- read_csv("datasets/gop_debates.csv")
+data <- read_csv("gop_debates.csv")
 
+#Conducts a TF-IDF analysis comparing each of the 2015 debates. 
+data = data %>% 
+  mutate(issue_code = paste0(title, full_date)) %>%
+  group_by(issue_code, word) %>%
+  tally() %>% 
+  arrange(desc(n))
 
-# Analyze Speaking Complexity ---------------------------------------------
-data <- data %>% 
-  bind_cols(textstat_readability(.$text,measure = "ELF")) # bind ELF score to each row
+data %>% bind_tf_idf(word, issue_code, n)
 
-
-# Aggregate & Arrange Data ------------------------------------------------
+# Visualizes the top 10 most common terms for each of the 2015 debates. 
 data %>% 
-  select(speaker=who,ELF) %>% # select columns of interest and rename who as speaker 
-  group_by(speaker) %>%  
-  
+  bind_tf_idf(word, issue_code, n) %>% 
+  arrange(desc(tf_idf))
