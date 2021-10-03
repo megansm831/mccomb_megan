@@ -10,103 +10,21 @@ library(tidyverse)
 library(tidytext)
 library(textstem)
 
-
 # Load data
 data <- read_csv("gop_debates.csv")
 
-# Trigrams ----------------------------------------------------------------
+# Separate Speakers between Trump, Cruz, and Rubio -------------------------------------------------------
 
-# Visualize most commonly occurring terms
-data %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words) %>%
-  count(word, sort = TRUE) %>%
-  filter(n > 200) %>%
-  mutate(word = reorder(word, n)) %>%
-  ggplot(aes(x=word, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-# Visualize most commonly occurring trigrams (take 1)
-data %>%
-  unnest_tokens(trigram, text, token = "ngrams", n=3) %>% 
-  #anti_join(stop_words) %>%
-  count(trigram, sort = TRUE) %>%
-  filter(n > 200) %>%
-  mutate(trigram = reorder(trigram, n)) %>%
-  ggplot(aes(x=trigram, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-
-# Visualize most commonly occurring trigrams (take 2)
-data %>%
-  unnest_tokens(trigram, text, token = "ngrams", n=3) %>% 
-  #anti_join(stop_words) %>%
-  count(trigram, sort = TRUE) %>%
-  filter(n > 200) %>%
-  mutate(trigram = reorder(trigram, n)) %>%
-  ggplot(aes(x=trigram, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-# Visualize most commonly occurring trigrams (take 3)
-data %>%
-  unnest_tokens(trigram, text, token = "ngrams", n=3) %>% 
-  #anti_join(stop_words) %>%
-  count(trigram, sort = TRUE) %>%
-  filter(n > 100) %>%
-  mutate(trigram = reorder(trigram, n)) %>%
-  ggplot(aes(x=trigram, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-
+trump <- filter(data, who == "TRUMP")
+cruz <- filter(data, who == "CRUZ")
+rubio <- filter(data, who == "RUBIO")
 
 # Framegrams --------------------------------------------------------------
 
 #stringr::str_detect()
 ?str_detect()
 
-
-# Immigration framegram 
-data %>%
-  unnest_tokens(trigram, text, token = "ngrams", n=3) %>% 
-  #anti_join(stop_words) %>%
-  count(trigram, sort = TRUE) %>%
-  filter(str_detect(trigram,"immigration")) %>% 
-  filter(n > 2) %>% # note filter change 
-  mutate(trigram = reorder(trigram, n)) %>%
-  ggplot(aes(x=trigram, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-
-# Stem and lemmatize 
-stem_words("immigration")
-lemmatize_words("immigration")
-
-
-# Immigration framegram (stemmed)
-data %>%
-  unnest_tokens(trigram, text, token = "ngrams", n=3) %>% 
-  #anti_join(stop_words) %>%
-  count(trigram, sort = TRUE) %>%
-  filter(str_detect(trigram,"immigr|immigration")) %>% 
-  filter(n > 2) %>% # note filter change 
-  mutate(trigram = reorder(trigram, n)) %>%
-  ggplot(aes(x=trigram, y=n)) +
-  geom_col() +
-  xlab(NULL) +
-  coord_flip()
-
-
-# Now with synonyms 
+# Stem and lemmatize with synonyms
 stem_strings("immigration displacement migration")
 lemmatize_strings("immigration displacement migration")
 
@@ -134,7 +52,7 @@ data %>%
 #paste
 paste(stop_words$word, collapse = "|")
 
-
+#creates bounded stop words
 stop_words_bounded <- paste0("\\b", stop_words$word, "\\b", collapse = "|")
 
 
