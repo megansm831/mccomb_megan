@@ -224,5 +224,31 @@ nrc_analysis <- trump %>%
 #Aggregate the data
 nrc_analysis %>% count(sentiment) %>% pivot_wider(names_from = "sentiment", values_from=n)
 
+# Calculate fear words per talking turn
+# Divide total fear words by number of talking turns
+
+bush_fear = 393/279
+cruz_fear = 690/348
+fiorina_fear = 235/115
+trump_fear = 535/738
+
+plot(bush_fear)
+plot(cruz_fear)
+plot(fiorina_fear)
+plot(trump_fear)
+
+print("Bush's frequency in fear words is")
+bush_fear
+print("Cruz's frequency in fear words is")
+cruz_fear
+print("Fiorina's frequency in fear words is")
+fiorina_fear
+print("Trump's frequency in fear words is")
+trump_fear
 
 
+# Conclusion -----------------------------------------------------------------
+# Compared to Bush, Cruz, and Fiorina, Trump had the lowest frequency of fear words at
+# about 0.72 which is half the frequency of the next smallest frequency; Bush's fear word
+# frequency at about 1.408. Yes, there is a meaningful difference in the use of fear
+# frequency words because Trump uses them at a significantly lower rate than his competitors.
