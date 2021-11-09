@@ -21,11 +21,9 @@ data <- read_csv("spam_ham.csv")
 # Auto-code for call to action Spam words
 cta <- data %>%
   mutate(Message = tolower(Message),
-         cta_spam = ifelse(str_detect(Message,"text|txt|claim|call|collect|join|click|win|go to|send"),1,0))
+         cta_spam = ifelse(str_detect(Message,"text|txt|claim|call|collect|join|click|win|go to|send"),"spam","ham"))
 
-# codes a "1" for spam messsages and a "0" for ham messages
+# prints "spam" for a predicted spam message, and "ham" for predicted ham message
 spammsg <- cta$cta_spam
-
-
 
 
