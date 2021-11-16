@@ -51,6 +51,7 @@ ts_plot(rt, "3 hours") +
     caption = "\nSource: Data collected from Twitter's REST API via rtweet"
   )
 
+##### LEAD INTO FINAL PROJECT #####
 # Deciding between a positive or negative reaction --------------------------------------------------------------------
 ## Sentiment Analysis
 
